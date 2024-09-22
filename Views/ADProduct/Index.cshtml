@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
+}
+
+<h3>Products</h3>
+<p>
+    @Html.ActionLink("Create New Product", "CreateProduct", "AdminDashboard")
+</p>
+<table class="table">
+    <!-- Display product information -->
+    @foreach (var product in ViewBag.Products)
+    {
+        <tr>
+            <th>
+                Product Id
+            </th>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Product Price
+            </th>
+            <th>
+                Product Image
+            </th>
+        </tr>
+        <tr>
+            <td>@product.Product_Id</td>
+            <td>@product.Product_Name</td>
+            <td>@product.Price</td>
+            <td><img src="@Url.Content(@product.Product_Img)" width="150" height="150" /></td>
+            <td>
+                @Html.ActionLink("Edit", "EditProduct", "AdminDashboard", new { id = @product.Product_Id }, null) |
+                @Html.ActionLink("Details", "DetailsProduct", "AdminDashboard", new { id = @product.Product_Id }, null) |
+                @Html.ActionLink("Delete", "DeleteProduct", "AdminDashboard", new { id = @product.Product_Id }, null)
+            </td>
+        </tr>
+
+    }
+</table>

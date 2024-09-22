@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PakMedModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PakMedEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Roles" EntityType="PakMedModel.Role" />
+    <EntitySet Name="Products" EntityType="PakMedModel.Product" />
+    <EntitySet Name="Carts" EntityType="PakMedModel.Cart" />
+    <AssociationSet Name="FK__Cart__Product_Id__5165187F" Association="PakMedModel.FK__Cart__Product_Id__5165187F">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <EntitySet Name="OrderDetails" EntityType="PakMedModel.OrderDetail" />
+    <AssociationSet Name="FK_Product_OrderDetail" Association="PakMedModel.FK_Product_OrderDetail">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <EntitySet Name="Orders" EntityType="PakMedModel.Order" />
+    <AssociationSet Name="FK_Order_OrderDetail" Association="PakMedModel.FK_Order_OrderDetail">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="PakMedModel.User" />
+    <AssociationSet Name="FK__Cart__User_Id__6477ECF3" Association="PakMedModel.FK__Cart__User_Id__6477ECF3">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Order" Association="PakMedModel.FK_User_Order">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__Role_Id__4316F928" Association="PakMedModel.FK__User__Role_Id__4316F928">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Role_Id" />
+    </Key>
+    <Property Name="Role_Id" Type="Int32" Nullable="false" />
+    <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="PakMedModel.FK__User__Role_Id__4316F928" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Product_Id" />
+    </Key>
+    <Property Name="Product_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Product_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="Product_Img" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Carts" Relationship="PakMedModel.FK__Cart__Product_Id__5165187F" FromRole="Product" ToRole="Cart" />
+    <NavigationProperty Name="OrderDetails" Relationship="PakMedModel.FK_Product_OrderDetail" FromRole="Product" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Cart_Id" />
+    </Key>
+    <Property Name="Cart_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Id" Type="Int32" />
+    <Property Name="Product_Id" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="PakMedModel.FK__Cart__Product_Id__5165187F" FromRole="Cart" ToRole="Product" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="User" Relationship="PakMedModel.FK__Cart__User_Id__6477ECF3" FromRole="Cart" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__Cart__Product_Id__5165187F">
+    <End Type="PakMedModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="PakMedModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderDetail_Id" />
+    </Key>
+    <Property Name="OrderDetail_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Order_Id" Type="Int32" />
+    <Property Name="Product_Id" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Product" Relationship="PakMedModel.FK_Product_OrderDetail" FromRole="OrderDetail" ToRole="Product" />
+    <NavigationProperty Name="Order" Relationship="PakMedModel.FK_Order_OrderDetail" FromRole="OrderDetail" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_Product_OrderDetail">
+    <End Type="PakMedModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="PakMedModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Order_Id" />
+    </Key>
+    <Property Name="Order_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Id" Type="Int32" />
+    <Property Name="Order_Date" Type="DateTime" Precision="3" />
+    <Property Name="Total_Price" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="OrderDetails" Relationship="PakMedModel.FK_Order_OrderDetail" FromRole="Order" ToRole="OrderDetail" />
+    <NavigationProperty Name="User" Relationship="PakMedModel.FK_User_Order" FromRole="Order" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Order_OrderDetail">
+    <End Type="PakMedModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="PakMedModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Order_Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="Order_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_Id" />
+    </Key>
+    <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User_Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Role_Id" Type="Int32" />
+    <Property Name="User_City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User_Num" Type="Int64" />
+    <NavigationProperty Name="Carts" Relationship="PakMedModel.FK__Cart__User_Id__6477ECF3" FromRole="User" ToRole="Cart" />
+    <NavigationProperty Name="Orders" Relationship="PakMedModel.FK_User_Order" FromRole="User" ToRole="Order" />
+    <NavigationProperty Name="Role" Relationship="PakMedModel.FK__User__Role_Id__4316F928" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK__Cart__User_Id__6477ECF3">
+    <End Type="PakMedModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="PakMedModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Order">
+    <End Type="PakMedModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="PakMedModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__Role_Id__4316F928">
+    <End Type="PakMedModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="PakMedModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Role_Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

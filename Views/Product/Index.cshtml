@@ -1,0 +1,64 @@
+﻿@model WebProject.Models.Product
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0">
+                <a href="@Url.Action("index", "Home")">Home</a> <span class="mx-2 mb-0">/</span> <a href="@Url.Action("index", "Store")">Store</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">@Model.Product_Name</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mr-auto">
+                <div class="border text-center">
+                    <img src="@Url.Content(Model.Product_Img)" alt="Image" class="img-fluid p-5">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-black">@Model.Product_Name</h2>
+                <p>
+                    @Model.Description
+                </p>
+
+
+                <p><strong class="text-primary h4">Rs. @Model.Price</strong></p>
+
+                <form method="post" action="@Url.Action("AddToCart", "Product")">
+                    @Html.Hidden("productId", Model.Product_Id)
+                    <div class="mb-5">
+                        <div class="input-group mb-3" style="max-width: 220px;">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                            </div>
+                            <input type="text" class="form-control text-center" name="quantity" value="1" placeholder=""
+                                   aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        @if (Session["username"] != null)
+                        {
+                            <button type="submit" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</button>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Login", "Login")" class="btn btn-sm height-auto px-4 py-3 btn-primary">Login to Add To Cart</a>
+                        }
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

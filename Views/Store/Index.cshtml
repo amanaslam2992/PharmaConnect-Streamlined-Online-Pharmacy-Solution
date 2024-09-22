@@ -1,0 +1,19 @@
+﻿@model WebProject.Models.Product
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutStore.cshtml";
+}
+
+@foreach (var product in ViewBag.Products)
+{
+    <div class="col-sm-6 col-lg-4 text-center item mt-5 mb-4 item-v2">
+        <a href="@Url.Action("Index", "Product", new { id = product.Product_Id })">
+            <img src="@Url.Content(@product.Product_Img)" width="270" height="270" alt="Image">
+        </a>
+        <h3 class="text-dark">
+            <a href="@Url.Action("Index", "Product", new { id = product.Product_Id })">@product.Product_Name</a>
+        </h3>
+        <p class="price">Rs. @product.Price</p>
+    </div>
+}

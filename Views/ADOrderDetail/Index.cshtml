@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin2.cshtml";
+}
+
+<h3>Order Details</h3>
+<table class="table">
+    <!-- Display order details information -->
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Order Detail ID</th>
+            <th>Product ID</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderdetails in ViewBag.OrderDetails)
+        {
+            <tr>
+                <td>@orderdetails.Order_Id</td>
+                <td>@orderdetails.OrderDetail_Id</td>
+                <td>@orderdetails.Product_Id</td>
+                <td>@orderdetails.Quantity</td>
+                <td>@orderdetails.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>

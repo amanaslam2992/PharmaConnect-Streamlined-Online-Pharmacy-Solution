@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3af1c5d8f95344c7b8cbb35abad4998a" Name="Diagram1">
+        <EntityTypeShape EntityType="PakMedModel.Role" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="PakMedModel.Product" Width="1.5" PointX="7.25" PointY="3.5" />
+        <EntityTypeShape EntityType="PakMedModel.Cart" Width="1.5" PointX="3" PointY="4.375" />
+        <AssociationConnector Association="PakMedModel.FK__Cart__Product_Id__5165187F" />
+        <EntityTypeShape EntityType="PakMedModel.OrderDetail" Width="1.5" PointX="7.25" PointY="0.75" />
+        <AssociationConnector Association="PakMedModel.FK_Product_OrderDetail" />
+        <EntityTypeShape EntityType="PakMedModel.Order" Width="1.5" PointX="5.125" PointY="0.75" />
+        <AssociationConnector Association="PakMedModel.FK_Order_OrderDetail" />
+        <EntityTypeShape EntityType="PakMedModel.User" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="PakMedModel.FK__Cart__User_Id__6477ECF3" />
+        <AssociationConnector Association="PakMedModel.FK_User_Order" />
+        <AssociationConnector Association="PakMedModel.FK__User__Role_Id__4316F928" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
